@@ -21,6 +21,10 @@
     -ms-transform: translate(-50%, -50%);
 }
 
+.form-group {
+    text-align: left;
+}
+
 .form-box {
     padding: 2px;
 }

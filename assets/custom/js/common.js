@@ -172,6 +172,14 @@ function getData(formData) {
     return response_data;
 }
 
+function isnull(val) {
+    if (val == null || val === null || val == 'null' || val == undefined || val === undefined || val == 'undefined') {
+        return '';
+    } else {
+        return val;
+    }
+}
+
 $(document).ready(function() {
     var jsonDataurl = 'json/loanapplication_with_all_details.json';
     var xmlhttp = new XMLHttpRequest();
@@ -211,10 +219,10 @@ function createForm(a) {
             var field_id = e.id;
             var field_name = e.name;
             var field_label = e.label;
-            var defaultValue = e.defaultValue;
+            var defaultValue = isnull(e.defaultValue);
             var field_type = e.type;
-            var field_placeholder = e.placeholder || '';
-            var pattern = e.pattern || '';
+            var field_placeholder = isnull(e.placeholder);
+            var pattern = isnull(e.pattern);
             var readOnly = e.readOnly;
             var visible = e.visible ? '' : 'hidden';
             $('#' + tab_id).append(`<div class="form-group" id="${field_id}">
@@ -234,7 +242,7 @@ function createForm(a) {
                     $('#' + field_id).append('<select name="' + field_name + '" class="form-control ' + visible + '" readonly="' + readOnly + '"></select>');
                     $.each(e.dataList, function(f, g) {
                         $('select[name="' + field_name + ']').append(
-                            $('<option ></option>').name(g.name).val(g.value).html(g.label)
+                            $('<option ></option>').attr('name', g.name).val(g.value).html(g.label)
                         );
                     });
                     $('#' + field_id + ':first').attr("selected", "selected");
