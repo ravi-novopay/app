@@ -213,6 +213,8 @@ $(document).ready(function() {
 
 });
 
+
+
 function createForm(a) {
     console.log(a);
     var tabs, formButtons, icon = '';
@@ -220,14 +222,12 @@ function createForm(a) {
     $('form').attr('id', a.formId);
     tabs = a.tabs;
     var totaltabs = tabs.length;
-    var first_tab = tabwidth = Math.round(100 / totaltabs);
+    var first_tab = Math.round(100 / totaltabs);
+    var tabwidth = Math.round(100 / totaltabs);
     $('.form-wizard-steps').removeClass('form-wizard-tolal-steps-4').addClass('form-wizard-tolal-steps-' + totaltabs);
     $.each(tabs, function(b, c) {
-        var tablabel = c.label;
-        var tabname = c.name;
-        var tab_id = c.id;
-        var fieldset_id = 'fields_' + tab_id;
         icon = c.icon || '';
+
         if (first_tab == tabwidth) {
             formButtons = '<div class="form-wizard-buttons"><button type="button" class="btn btn-next">Next</button></div>';
         } else if (tabwidth != first_tab && tabwidth < 95) {
@@ -239,14 +239,32 @@ function createForm(a) {
         }
 
         //active
-        $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + tablabel + '</p></div>');
-        $('form').append('<fieldset id="' + fieldset_id + '"></fieldset>');
-        //$('fieldset').attr('id',fieldset_id );
-        $('#' + fieldset_id).append('<div id="' + tab_id + '" name="' + tabname + '"></div>' + formButtons);
-        var $tab = $('#' + fieldset_id + ' #' + tab_id);
-        $tab.append('<h3>' + tablabel + '</h3>');
-        var fields = c.fields;
-        var pattern, help_block;
+        $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + c.label + '</p></div>');
+        $('form').append('<fieldset id="fields_' + c.id + '"></fieldset>');
+        var $original_tab_id = $('#fields_' + c.id);
+        $original_tab_id.append('<div id="' + c.id + '" name="' + c.name + '"></div>');
+        if (c.fields !== null) {
+            var tab_label = c.label;
+            var fields = c.fields;
+            var $tab = $('#' + c.id);
+            $tab.append('<h5 class="text-center">' + tab_label + '</h5>');
+            makeinputFields($original_tab_id, $tab, c.id, tab_label, fields, c);
+        }
+        tabwidth += tabwidth;
+        $('#fields_' + c.id).append(formButtons);
+
+    });
+    $('.form-wizard-step:first').addClass('active');
+    $('.progress-bar:first').addClass('active');
+    $('fieldset:first').fadeIn('slow');
+};
+
+
+function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
+
+
+    var pattern, help_block;
+    if (fields !== null) {
         $.each(fields, function(d, e) {
             var field_id = e.id;
             var field_name = e.name;
@@ -254,7 +272,7 @@ function createForm(a) {
             var defaultValue = checkNull(e.defaultValue) ? '' : 'value="' + e.defaultValue + '" ';
             var field_type = e.type;
             var placeholder = checkNull(e.placeholder) ? '' : 'placeholder="' + e.placeholder + '" ';
-            var required = (e.required == true) ? 'required="required"' : '';
+            var required = e.required ? 'required="required"' : '';
 
             if (e.validators !== null) {
                 pattern = checkNull(e.validators.pattern) ? '' : 'pattern ="' + e.validators.pattern + '" ';
@@ -302,9 +320,87 @@ function createForm(a) {
             $('#' + field_id).append('');
 
         });
-        tabwidth += tabwidth;
-    });
-    $('.form-wizard-step:first').addClass('active');
-    $('.progress-bar:first').addClass('active');
-    $('fieldset:first').fadeIn('slow');
-};
+    }
+    var addon_section1 = '',
+        addon_section2 = '';
+    /*
+     var ttype = jQuery.type(a.sections);
+            console.log(ttype + ' found under ' + a);
+            */
+
+
+    if (a.sections !== null) {
+        $.each(a.sections, function(x, y1) {
+            if (y1.fields) {
+                $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y1.id + '" data-visible="no">' + y1.label + '</a> <div id="' + y1.id + '" name="' + y1.name + '"  style="display:none;" ></div>');
+                var tab_label1 = y1.label;
+                var fields1 = y1.fields;
+                var $newtab = $('#' + y1.id);
+                $newtab.append('<h5 class="text-center hide_extras" data-id="' + y1.id + '">' + tab_label1 + '</h5>');
+                makeinputFields($original_tab_id, $newtab, y1.id, tab_label1, fields1, y1);
+            }
+            if (y1.groups !== null) {
+                $.each(y1.groups, function(x2, y2) {
+                    if (y2.fields) {
+                        $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y2.id + '" data-visible="no">' + y2.label + '</a> <div id="' + y2.id + '" name="' + y2.name + '"  style="display:none;" ></div>');
+                        var tab_label2 = y2.label;
+                        var fields2 = y2.fields;
+                        var $newtab = $('#' + y2.id);
+                        $newtab.append('<h5 class="text-center hide_extras" data-id="' + y2.id + '">' + tab_label2 + '</h5>');
+                        makeinputFields($original_tab_id, $newtab, y2.id, tab_label2, fields2, y2);
+                    }
+                });
+            }
+        });
+
+    }
+
+    if (a.groups !== null) {
+        $.each(a.groups, function(x3, y3) {
+            if (y3.fields) {
+                $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y3.id + '" data-visible="no">' + y3.label + '</a> <div id="' + y3.id + '" name="' + y3.name + '" style="display:none;"></div>');
+                var tab_label3 = y3.label;
+                var fields3 = y3.fields;
+                var $newtab = $('#' + y3.id);
+                $newtab.append('<h5 class="text-center hide_extras" data-id="' + y3.id + '">' + tab_label3 + '</h5>');
+                makeinputFields($original_tab_id, $newtab, y3.id, tab_label3, fields3, y3);
+            }
+        });
+    }
+    //  $tab.append('');
+
+    $original_tab_id.append('<div class="more_data" >' + addon_section1 + '</div>' + addon_section2);
+}
+
+$(document).on('click', '.more_data .load_extras', function(e) {
+
+    e.preventDefault();
+    var $this = $(this);
+    var id = $this.data('id');
+    var visibility = $this.data('visible') ? $this.data('visible') : "no";
+
+    if (visibility == "no") {
+        $('#' + id).fadeIn('slow');
+        $this.fadeout('slow');
+        $('html, body').animate({
+            scrollTop: $('#' + id).offset().top
+        }, 200);
+    }
+
+});
+$(document).on('click', '.more_data .hide_extras', function(e) {
+
+    e.preventDefault();
+    var $this = $(this);
+    var id = $this.data('id');
+    var visibility = $this.data('visible') ? $this.data('visible') : "no";
+
+    if (visibility == "no") {
+        $('#' + id).fadeOut('slow');
+        $(".more_data .load_extras[data-id='" + id + "']").fadeIn('slow');
+        $('html, body').animate({
+            scrollTop: $(".more_data .load_extras[data-id='" + id + "']").offset().top
+        }, 200);
+    }
+
+});
