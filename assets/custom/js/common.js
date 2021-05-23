@@ -192,7 +192,7 @@ $(document).ready(function() {
 
 function createForm(a) {
     console.log(a);
-    var label, tabs, id, icon, name = '';
+    var tabs, icon = '';
     $('form').html('<h4>' + a.label + '</h4><p>Fill all form field to go next step</p><div class="form-wizard-steps form-wizard-tolal-steps-4"></div><div class="fields_set"></div>');
     $('form').attr('id', a.formId);
     tabs = a.tabs;
@@ -203,7 +203,7 @@ function createForm(a) {
         var tab_id = c.id;
         icon = c.icon || '';
         $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + tablabel + '</p></div>');
-        $('.fields_set').apeend('<div id="' + tab_id + '"></div>')
+        $('.fields_set').append('<div id="' + tab_id + '" name="' + tabname + '"></div>')
 
         $('#' + tab_id).append('<h3>' + tablabel + '</h3>');
         var fields = c.fields;
