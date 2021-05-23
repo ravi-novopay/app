@@ -372,35 +372,30 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
     $original_tab_id.append('<div class="more_data" >' + addon_section1 + '</div>' + addon_section2);
 }
 
-$(document).on('click', '.more_data .load_extras', function(e) {
+$(document).on('click', '.load_extras', function(e) {
 
     e.preventDefault();
     var $this = $(this);
     var id = $this.data('id');
-    var visibility = $this.data('visible') ? $this.data('visible') : "no";
+    $('#' + id).fadeIn('slow');
 
-    if (visibility == "no") {
-        $('#' + id).fadeIn('slow');
-        $this.fadeout('slow');
-        $('html, body').animate({
-            scrollTop: $('#' + id).offset().top
-        }, 200);
-    }
+    $('html, body').animate({
+        scrollTop: $('#' + id).offset().top
+    }, 1000);
+    $this.fadeOut('slow');
+
 
 });
-$(document).on('click', '.more_data .hide_extras', function(e) {
+$(document).on('click', '.hide_extras', function(e) {
 
     e.preventDefault();
     var $this = $(this);
     var id = $this.data('id');
-    var visibility = $this.data('visible') ? $this.data('visible') : "no";
+    $(".more_data .load_extras[data-id='" + id + "']").fadeIn('slow');
+    $('html, body').animate({
+        scrollTop: $("form").offset().top
+    }, 200);
+    $('#' + id).fadeOut('slow');
 
-    if (visibility == "no") {
-        $('#' + id).fadeOut('slow');
-        $(".more_data .load_extras[data-id='" + id + "']").fadeIn('slow');
-        $('html, body').animate({
-            scrollTop: $(".more_data .load_extras[data-id='" + id + "']").offset().top
-        }, 200);
-    }
 
 });
