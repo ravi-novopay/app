@@ -1,6 +1,7 @@
 (function($) {
     $.fn.validatePattern = function(search) {
         // Get the current element's siblings
+
         var pattern = this.attr('pattern');
         var value = this.val();
         return !(pattern && (value.length > 0) && !value.match(new RegExp('^' + pattern + '$')));
@@ -22,7 +23,19 @@
     };
 })(jQuery);
 
+/*
+$(document).on('keyup', ':input', function(e) {
+    e.preventDefault();
+    var validation = $(this).attr('validation');
+    if (validation.length) {
+        $.each(e.validators, function(k, v) {
+         var   pattern = `${v.name}= "${v.value}"`;
+          var   helptext = v.mesage || '';
+        });
 
+    }
+});
+*/
 $(document).on('keyup', ':input', function(e) {
     e.preventDefault();
     if (!$(this).validatePattern()) {
@@ -172,12 +185,14 @@ function getData(formData) {
     return response_data;
 }
 
-function isnull(val) {
-    if (val == null || val === null || val == 'null' || val == undefined || val === undefined || val == 'undefined') {
-        return '';
+function checkNull(val) {
+    var ret_value = "";
+    if (val === null || val === 'null' || val === undefined || val == 'undefined') {
+        ret_value = true;
     } else {
-        return val;
+        ret_value = false;
     }
+    return ret_value;
 }
 
 $(document).ready(function() {
@@ -200,59 +215,96 @@ $(document).ready(function() {
 
 function createForm(a) {
     console.log(a);
-    var tabs, icon = '';
-    $('form').html('<h4>' + a.label + '</h4><p>Fill all form field to go next step</p><div class="form-wizard-steps form-wizard-tolal-steps-4"></div><div class="fields_set"></div>');
+    var tabs, formButtons, icon = '';
+    $('form').html('<h4>' + a.label + '</h4><p>Fill all form field to go next step</p><div class="form-wizard-steps form-wizard-tolal-steps-4"></div>');
     $('form').attr('id', a.formId);
     tabs = a.tabs;
-    $('.form-wizard-steps').removeClass('form-wizard-tolal-steps-4').addClass('form-wizard-tolal-steps-' + tabs.length);
+    var totaltabs = tabs.length;
+    var first_tab = tabwidth = Math.round(100 / totaltabs);
+    $('.form-wizard-steps').removeClass('form-wizard-tolal-steps-4').addClass('form-wizard-tolal-steps-' + totaltabs);
     $.each(tabs, function(b, c) {
         var tablabel = c.label;
         var tabname = c.name;
         var tab_id = c.id;
+        var fieldset_id = 'fields_' + tab_id;
         icon = c.icon || '';
-        $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + tablabel + '</p></div>');
-        $('.fields_set').append('<div id="' + tab_id + '" name="' + tabname + '"></div>')
+        if (first_tab == tabwidth) {
+            formButtons = '<div class="form-wizard-buttons"><button type="button" class="btn btn-next">Next</button></div>';
+        } else if (tabwidth != first_tab && tabwidth < 95) {
+            formButtons = `<div class="form-wizard-buttons"><button type="button" class="btn btn-previous">Previous</button>
+            <button type="button" class="btn btn-next">Next</button></div>`;
+        } else {
+            formButtons = `<div class="form-wizard-buttons"><button type="button" class="btn btn-previous">Previous</button>
+            <button type="submit" class="btn btn-submit">Submit</button></div>`;
+        }
 
-        $('#' + tab_id).append('<h3>' + tablabel + '</h3>');
+        //active
+        $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + tablabel + '</p></div>');
+        $('form').append('<fieldset id="' + fieldset_id + '"></fieldset>');
+        //$('fieldset').attr('id',fieldset_id );
+        $('#' + fieldset_id).append('<div id="' + tab_id + '" name="' + tabname + '"></div>' + formButtons);
+        var $tab = $('#' + fieldset_id + ' #' + tab_id);
+        $tab.append('<h3>' + tablabel + '</h3>');
         var fields = c.fields;
+        var pattern, help_block;
         $.each(fields, function(d, e) {
             var field_id = e.id;
             var field_name = e.name;
             var field_label = e.label;
-            var defaultValue = isnull(e.defaultValue);
+            var defaultValue = checkNull(e.defaultValue) ? '' : 'value="' + e.defaultValue + '" ';
             var field_type = e.type;
-            var field_placeholder = isnull(e.placeholder);
-            var pattern = isnull(e.pattern);
-            var readOnly = (e.readOnly === true) ? true : 'false';
-            var visible = ''; //(e.visible === false) ? 'hidden' : '';
-            $('#' + tab_id).append('<div class="form-group ' + visible + ' " id="' + field_id + '"></div>');
+            var placeholder = checkNull(e.placeholder) ? '' : 'placeholder="' + e.placeholder + '" ';
+            var required = (e.required == true) ? 'required="required"' : '';
+
+            if (e.validators !== null) {
+                pattern = checkNull(e.validators.pattern) ? '' : 'pattern ="' + e.validators.pattern + '" ';
+                help_block = '<span class="help-block hidden">' + e.validators.error_message + '</span>';
+            } else {
+                pattern = '';
+                help_block = '';
+            }
+
+
+            var readOnly = (e.readOnly === true) ? 'readonly="' + e.readOnly + '"' : '';
+            var visible = (e.visible === false) ? 'hidden' : '';
+            $tab.append('<div class="form-group ' + visible + ' " id="' + field_id + '"></div>');
+            $('#' + field_id).append('<label>' + field_label + ' </label>');
             switch (field_type) {
                 case 'text':
-                    $('#' + field_id).append('<label>' + field_label + ' </label><input type="text" name="' + field_name + '" placeholder="' + field_placeholder + '" class="form-control" value="' + defaultValue + '" pattern="' + pattern + '" readonly="' + readOnly + '">');
+                case 'email':
+                case 'date':
+                case 'number':
+                    $('#' + field_id).append('<input type="' + field_type + '" name="' + field_name + '"  ' + placeholder + ' class="form-control" ' + defaultValue + readOnly + ' ' + pattern + required + ' >' + help_block);
                     break;
                 case 'radio':
-                    $('#' + field_id).append('<label>' + field_label + ' </label>');
+                case 'checkbox':
                     $.each(e.dataList, function(f, g) {
-                        $('#' + field_id).append('<label class="radio-inline " id="' + g.id + '"><input type="radio" name="' + g.name + '" value="' + g.value + '" checked="" readonly="' + readOnly + '"> ' + g.label + '</label>');
+                        $('#' + field_id).append('<label class="' + field_type + '-inline " id="' + g.id + '"><input type="' + field_type + '" name="' + g.name + '" value="' + g.value + '" checked="" ' + readOnly + '> ' + g.label + '</label>' + help_block);
                     });
-                    $('#' + field_id + ' radio:first').attr("checked", "checked");
+                    $('#' + field_id + ' ' + field_type + ':first').attr("checked", "checked");
                     break;
                 case 'dropdown':
-                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control" readonly="' + readOnly + '"></select>');
+                case 'select':
+                    if (e.placeholder) {
+                        placeholder = '<option value="" disabled selected>' + e.placeholder + '</option>';
+                    }
+                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control" ' + readOnly + required + '>' + placeholder + '</select>' + help_block);
                     $.each(e.dataList, function(f, g) {
-                        $('select[name="' + field_name + ']').append(
-                            $('<option ></option>').attr('name', g.name).val(g.value).html(g.label)
-                        );
+                        $('#' + field_id + ' select[name=' + field_name + ']').append(
+                            '<option id="' + g.id + '" name="' + g.name + '" value="' + g.value + '" >' + g.label + '</option>');
                     });
-                    $('#' + field_id + ' option:first').attr("selected", "selected");
+                    $('#' + field_id + ' select option:first').attr("selected", "selected");
                     break;
                 default:
 
                     break;
             }
+            $('#' + field_id).append('');
 
         });
+        tabwidth += tabwidth;
     });
-
-
+    $('.form-wizard-step:first').addClass('active');
+    $('.progress-bar:first').addClass('active');
+    $('fieldset:first').fadeIn('slow');
 };

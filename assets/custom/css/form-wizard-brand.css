@@ -25,6 +25,10 @@
     display: none!important;
 }
 
+.red {
+    color: red;
+}
+
 .form-group {
     text-align: left;
     margin-top: 15px;
@@ -522,9 +526,8 @@
 .checkbox-inline input[type="checkbox"],
 .radio input[type="radio"],
 .radio-inline input[type="radio"] {
-    position: absolute;
     margin-top: 9px;
-    margin-left: -20px;
+    margin-left: 20px;
 }
 
 .form-control option:hover,
@@ -579,6 +582,7 @@
 .form-wizard .btn.btn-next:active:focus,
 .form-wizard .btn.btn-next.active:focus {
     background: #0096c5;
+    margin-top: 25px;
 }
 
 .form-wizard .btn.btn-submit,
@@ -586,6 +590,7 @@
 .form-wizard .btn.btn-submit:active:focus,
 .form-wizard .btn.btn-submit.active:focus {
     background: #0096c5;
+    margin-top: 25px;
 }
 
 .form-wizard .btn.btn-previous,
@@ -593,6 +598,7 @@
 .form-wizard .btn.btn-previous:active:focus,
 .form-wizard .btn.btn-previous.active:focus {
     background: #bbb;
+    margin-top: 25px;
 }
 
 .form-wizard .success h3 {
@@ -692,7 +698,19 @@
 }
 
 .form-wizard .input-error {
-    border-color: #0096c5;
+    border-color: #c54800;
+}
+
+.has-error,
+.has-error label,
+.has-error input,
+.has-error .help-block {
+    border-color: #c8623a;
+    color: #c8623a
+}
+
+.has-error .form-control:focus {
+    border-bottom: 2px solid #c8623a!important;
 }
 
 

@@ -10,6 +10,7 @@
       "id": "personal_details",
       "name": "personal_details",
       "label": "Personal Details",
+      "icon": "user",
       "gridColumn": null,
       "validators": null,
       "fields": [
@@ -19,19 +20,17 @@
           "label": "Full Name",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter full name",
           "dataList": null,
-          "validators": [
-            {
-              "name": "required",
-              "value": "true",
-              "message": "Required"
-            }
-          ]
+          "validators": {
+            "pattern": "[a-z A-Z]{3,}",
+            "error_message": "Only Alphabets and spaces are allowed"
+          }
         },
         {
           "id": "language_name",
@@ -39,19 +38,30 @@
           "label": "Language Name",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
-          "type": "text",
-          "placeholder": "Enter language name",
-          "dataList": null,
-          "validators": [
+          "type": "dropdown",
+          "placeholder": "Select language",
+          "dataList": [
             {
-              "name": "pattern",
-              "value": "[^A-Za-z]",
-              "message": "Must contain only letters"
+              "id": "hi",
+              "name": "language",
+              "label": "Hindi",
+              "value": "HINDI"
+            },
+            {
+              "id": "en",
+              "name": "language",
+              "label": "English",
+              "value": "ENGLISH"
             }
-          ]
+          ],
+          "validators": {
+            "pattern": "[A-Za-z]{2,}",
+            "error_message": "Must contain only letters"
+          }
         },
         {
           "id": "gender",
@@ -59,7 +69,8 @@
           "label": "Gender",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "radio",
@@ -78,13 +89,11 @@
               "value": "FEMALE"
             }
           ],
-          "validators": [
-            {
-              "name": "required",
-              "value": "true",
-              "message": "Required"
-            }
-          ]
+          "validators": {
+            "required": "required",
+            "pattern": "",
+            "error_message": "select valid Option"
+          }
         },
         {
           "id": "phone",
@@ -92,13 +101,17 @@
           "label": "Phone",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter phone",
           "dataList": null,
-          "validators": []
+          "validators": {
+            "pattern": "[6-9]{1}[0-9]{9}",
+            "error_message": "Only Valid 10 Digit Mobile Numbers"
+          }
         },
         {
           "id": "email",
@@ -106,13 +119,14 @@
           "label": "Email",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
-          "type": "text",
-          "placeholder": "Enter email",
+          "type": "email",
+          "placeholder": "Enter email ID",
           "dataList": null,
-          "validators": []
+          "validators": null
         },
         {
           "id": "id_type",
@@ -120,7 +134,8 @@
           "label": "ID Type",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "dropdown",
@@ -139,7 +154,7 @@
               "value": "AADHAAR"
             }
           ],
-          "validators": []
+          "validators": null
         },
         {
           "id": "id",
@@ -147,13 +162,14 @@
           "label": "ID",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter ID",
           "dataList": null,
-          "validators": []
+          "validators": null
         },
         {
           "id": "highest_qualification",
@@ -161,13 +177,14 @@
           "label": "Highest Qualification",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter highest qualification",
           "dataList": null,
-          "validators": []
+          "validators": null
         }
       ],
       "groups": null,
@@ -177,7 +194,8 @@
           "name": "address_details",
           "label": "Address Details",
           "gridColumn": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "validators": null,
           "fields": null,
           "groups": [
@@ -186,7 +204,8 @@
               "name": "permanent_address__personal",
               "label": "Permanent Address",
               "gridColumn": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "fields": [
                 {
                   "id": "address_line_1__personal",
@@ -194,13 +213,14 @@
                   "label": "Address Line1",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line1",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "address_line_2__personal",
@@ -208,13 +228,14 @@
                   "label": "Address Line2",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line2",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "landmark__personal",
@@ -222,13 +243,14 @@
                   "label": "Landmark",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter landmark",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "pincode__personal",
@@ -236,13 +258,14 @@
                   "label": "Pincode",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter pincode",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "country__personal",
@@ -250,7 +273,8 @@
                   "label": "Country",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -263,7 +287,7 @@
                       "value": "IND"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "state__personal",
@@ -271,7 +295,8 @@
                   "label": "State",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -284,7 +309,7 @@
                       "value": "KARNATAKA"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "district__personal",
@@ -292,7 +317,8 @@
                   "label": "District",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -305,7 +331,7 @@
                       "value": "BLR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "vtc__personal",
@@ -313,7 +339,8 @@
                   "label": "VTC",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -332,7 +359,7 @@
                       "value": "BELLANDUR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 }
               ],
               "validators": null
@@ -342,7 +369,8 @@
               "name": "residential_address",
               "label": "Residential Address",
               "gridColumn": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "fields": [
                 {
                   "id": "address_line_1__res",
@@ -350,13 +378,14 @@
                   "label": "Address Line1",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line1",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "address_line_2__res",
@@ -364,13 +393,14 @@
                   "label": "Address Line2",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line2",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "landmark__res",
@@ -378,13 +408,14 @@
                   "label": "Landmark",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter landmark",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "pincode__res",
@@ -392,13 +423,14 @@
                   "label": "Pincode",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter pincode",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "country__res",
@@ -406,7 +438,8 @@
                   "label": "Country",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -419,7 +452,7 @@
                       "value": "IND"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "state__res",
@@ -427,7 +460,8 @@
                   "label": "State",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -440,7 +474,7 @@
                       "value": "KARNATAKA"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "district__res",
@@ -448,7 +482,8 @@
                   "label": "District",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -461,7 +496,7 @@
                       "value": "BLR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "vtc__res",
@@ -469,7 +504,8 @@
                   "label": "VTC",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -488,7 +524,7 @@
                       "value": "BELLANDUR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 }
               ],
               "validators": null
@@ -501,6 +537,7 @@
       "id": "shop_details",
       "name": "shop_details",
       "label": "Shop Details",
+      "icon": "university",
       "gridColumn": null,
       "validators": null,
       "fields": [
@@ -510,13 +547,14 @@
           "label": "Shop Name",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter shop name",
           "dataList": null,
-          "validators": []
+          "validators": null
         },
         {
           "id": "shop_size",
@@ -524,13 +562,14 @@
           "label": "Shop Size",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter shop size",
           "dataList": null,
-          "validators": []
+          "validators": null
         },
         {
           "id": "monthly_turn_over",
@@ -538,13 +577,14 @@
           "label": "Monthly Turn over",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "number",
           "placeholder": "Enter monthly turn over",
           "dataList": null,
-          "validators": []
+          "validators": null
         },
         {
           "id": "business_type",
@@ -552,13 +592,14 @@
           "label": "Business Type",
           "defaultValue": null,
           "dependableFieldIndex": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "readOnly": false,
           "autoComplete": null,
           "type": "text",
           "placeholder": "Enter business type",
           "dataList": null,
-          "validators": []
+          "validators": null
         }
       ],
       "groups": [
@@ -567,7 +608,8 @@
           "name": "shop_address",
           "label": "Shop Address",
           "gridColumn": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "fields": [
             {
               "id": "address_line_1__shop",
@@ -575,13 +617,14 @@
               "label": "Address Line1",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter address line1",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "address_line_2__shop",
@@ -589,13 +632,14 @@
               "label": "Address Line2",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter address line2",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "landmark__shop",
@@ -603,13 +647,14 @@
               "label": "Landmark",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter landmark",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "pincode__shop",
@@ -617,13 +662,14 @@
               "label": "Pincode",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter pincode",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "country__shop",
@@ -631,7 +677,8 @@
               "label": "Country",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -644,7 +691,7 @@
                   "value": "IND"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "state__shop",
@@ -652,7 +699,8 @@
               "label": "State",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -665,7 +713,7 @@
                   "value": "KARNATAKA"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "district__shop",
@@ -673,7 +721,8 @@
               "label": "District",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -686,7 +735,7 @@
                   "value": "BLR"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "vtc__shop",
@@ -694,7 +743,8 @@
               "label": "VTC",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -713,7 +763,7 @@
                   "value": "BELLANDUR"
                 }
               ],
-              "validators": []
+              "validators": null
             }
           ],
           "validators": null
@@ -725,6 +775,7 @@
       "id": "additional_details",
       "name": "additional_details",
       "label": "Additional Details",
+      "icon": "file-text",
       "gridColumn": null,
       "validators": null,
       "fields": null,
@@ -735,7 +786,8 @@
           "name": "guarantor_details",
           "label": "Guarantor Details",
           "gridColumn": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "validators": null,
           "fields": [
             {
@@ -744,7 +796,8 @@
               "label": "Category",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "radio",
@@ -763,7 +816,7 @@
                   "value": "ORG"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "grntr_full_name",
@@ -771,13 +824,14 @@
               "label": "Full Name",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter full name",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "grntr_mobile",
@@ -785,13 +839,14 @@
               "label": "Mobile Number",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter mobile number",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "grntr_id_type",
@@ -799,7 +854,8 @@
               "label": "ID Type",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -818,7 +874,7 @@
                   "value": "AADHAAR"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "grntr_id",
@@ -826,13 +882,14 @@
               "label": "ID",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter ID",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "grntr_relationship_with_applicant",
@@ -840,7 +897,8 @@
               "label": "Relationship With Applicant",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -889,7 +947,7 @@
                   "value": "SPOUSE"
                 }
               ],
-              "validators": []
+              "validators": null
             }
           ],
           "groups": [
@@ -898,7 +956,8 @@
               "name": "grntr_residential_address",
               "label": "Residential Address",
               "gridColumn": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "fields": [
                 {
                   "id": "address_line_1__grntr",
@@ -906,13 +965,14 @@
                   "label": "Address Line1",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line1",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "address_line_2__grntr",
@@ -920,13 +980,14 @@
                   "label": "Address Line2",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line2",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "landmark__grntr",
@@ -934,13 +995,14 @@
                   "label": "Landmark",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter landmark",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "pincode__grntr",
@@ -948,13 +1010,14 @@
                   "label": "Pincode",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter pincode",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "country__grntr",
@@ -962,7 +1025,8 @@
                   "label": "Country",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -975,7 +1039,7 @@
                       "value": "IND"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "state__grntr",
@@ -983,7 +1047,8 @@
                   "label": "State",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -996,7 +1061,7 @@
                       "value": "KARNATAKA"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "district__grntr",
@@ -1004,7 +1069,8 @@
                   "label": "District",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1017,7 +1083,7 @@
                       "value": "BLR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "vtc__grntr",
@@ -1025,7 +1091,8 @@
                   "label": "VTC",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1044,7 +1111,7 @@
                       "value": "BELLANDUR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 }
               ],
               "validators": null
@@ -1056,7 +1123,8 @@
           "name": "collateral_details",
           "label": "Collateral Details",
           "gridColumn": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "validators": null,
           "fields": [
             {
@@ -1065,7 +1133,8 @@
               "label": "Source",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "radio",
@@ -1090,7 +1159,7 @@
                   "value": "OTHERS"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "gst_type",
@@ -1098,7 +1167,8 @@
               "label": "Type",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "radio",
@@ -1123,7 +1193,7 @@
                   "value": "HOME"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "gst_amount",
@@ -1131,13 +1201,14 @@
               "label": "Amount",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "number",
               "placeholder": "Enter amount",
               "dataList": null,
-              "validators": []
+              "validators": null
             }
           ],
           "groups": null
@@ -1147,7 +1218,8 @@
           "name": "party_details",
           "label": "Party Details",
           "gridColumn": null,
-          "visible": false,
+          "visible": true,
+          "required": true,
           "validators": null,
           "fields": [
             {
@@ -1156,7 +1228,8 @@
               "label": "Category",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "radio",
@@ -1175,7 +1248,7 @@
                   "value": "ORG"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "party_full_name",
@@ -1183,13 +1256,14 @@
               "label": "Full Name",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter full name",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "party_mobile",
@@ -1197,13 +1271,14 @@
               "label": "Mobile Number",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter mobile number",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "party_id_type",
@@ -1211,7 +1286,8 @@
               "label": "ID Type",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -1230,7 +1306,7 @@
                   "value": "AADHAAR"
                 }
               ],
-              "validators": []
+              "validators": null
             },
             {
               "id": "party_id",
@@ -1238,13 +1314,14 @@
               "label": "ID",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "text",
               "placeholder": "Enter ID",
               "dataList": null,
-              "validators": []
+              "validators": null
             },
             {
               "id": "party_relationship_with_collateral",
@@ -1252,7 +1329,8 @@
               "label": "Relationship With Collateral",
               "defaultValue": null,
               "dependableFieldIndex": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "readOnly": false,
               "autoComplete": null,
               "type": "dropdown",
@@ -1271,7 +1349,7 @@
                   "value": "SELLER"
                 }
               ],
-              "validators": []
+              "validators": null
             }
           ],
           "groups": [
@@ -1280,7 +1358,8 @@
               "name": "party_residential_address",
               "label": "Residential Address",
               "gridColumn": null,
-              "visible": false,
+              "visible": true,
+              "required": true,
               "fields": [
                 {
                   "id": "address_line_1__party",
@@ -1288,13 +1367,14 @@
                   "label": "Address Line1",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line1",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "address_line_2__party",
@@ -1302,13 +1382,14 @@
                   "label": "Address Line2",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter address line2",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "landmark__party",
@@ -1316,13 +1397,14 @@
                   "label": "Landmark",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter landmark",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "pincode__party",
@@ -1330,13 +1412,14 @@
                   "label": "Pincode",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "text",
                   "placeholder": "Enter pincode",
                   "dataList": null,
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "country__party",
@@ -1344,7 +1427,8 @@
                   "label": "Country",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1357,7 +1441,7 @@
                       "value": "IND"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "state__party",
@@ -1365,7 +1449,8 @@
                   "label": "State",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1378,7 +1463,7 @@
                       "value": "KARNATAKA"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "district__party",
@@ -1386,7 +1471,8 @@
                   "label": "District",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1399,7 +1485,7 @@
                       "value": "BLR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 },
                 {
                   "id": "vtc__party",
@@ -1407,7 +1493,8 @@
                   "label": "VTC",
                   "defaultValue": null,
                   "dependableFieldIndex": null,
-                  "visible": false,
+                  "visible": true,
+                  "required": true,
                   "readOnly": false,
                   "autoComplete": null,
                   "type": "dropdown",
@@ -1426,7 +1513,7 @@
                       "value": "BELLANDUR"
                     }
                   ],
-                  "validators": []
+                  "validators": null
                 }
               ],
               "validators": null
