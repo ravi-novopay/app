@@ -223,8 +223,8 @@ function createForm(a) {
             var field_type = e.type;
             var field_placeholder = isnull(e.placeholder);
             var pattern = isnull(e.pattern);
-            var readOnly = e.readOnly;
-            var visible = e.visible ? '' : 'hidden';
+            var readOnly = (e.readOnly === true) ? true : 'false';
+            var visible = (e.visible === false) ? 'hidden' : '';
             $('#' + tab_id).append('<div class="form-group ' + visible + ' " id="' + field_id + '"></div>');
             switch (field_type) {
                 case 'text':
