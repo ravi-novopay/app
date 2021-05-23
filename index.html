@@ -62,7 +62,7 @@
         <div class="container" style="padding:0">
 
             <div class="rows">
-                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3" id="form_Holder">
 
                     <!-- Form Wizard -->
                     <div class="form-wizard form-header-classic form-body-material">
@@ -388,9 +388,26 @@
     </section>
     <!-- main content -->
 
+    <div class="modal fade in" id="im_n" style="z-index: 1080;" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog" id="imstyle_n" style="text-align-last: center;margin:0;">
+            <div class="modal-content" style="height:100%;width:100%;margin:auto;">
+                <div class="imbody" id="imbody_n">
+                    <div class="modal-body" style="">
+                        <p> </p>
+                    </div>
+                    <div class="modal-footer" id="im_footer_n">
+
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    </div>
+    <div id="loader"><span class="loader_text">please wait</span></div>
 
     <!-- Jquery JS -->
-    <script src="assets/external/jquery-1.11.1.min.js"></script>
+    <script src="assets/external/jquery-3.6.0.min.js"></script>
     <!-- bootStrap JS -->
     <script src="assets/external/bootstrap/js/bootstrap.min.js"></script>
 
@@ -398,6 +415,8 @@
     <!-- Plugin Custom JS -->
     <script src="assets/custom/js/form-wizard.js"></script>
     <!-- Plugin Custom JS -->
+
+    <script src="assets/custom/js/common.js"></script>
 </body>
 
 </html>
