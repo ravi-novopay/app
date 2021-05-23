@@ -192,9 +192,60 @@ $(document).ready(function() {
 
 function createForm(a) {
     console.log(a);
-    $('form').html('<h4>' + a.label + '</h4><p>Fill all form field to go next step</p>');
+    var label, tabs, id, icon, name = '';
+    $('form').html('<h4>' + a.label + '</h4><p>Fill all form field to go next step</p><div class="form-wizard-steps form-wizard-tolal-steps-4"></div><div class="fields_set"></div>');
     $('form').attr('id', a.formId);
+    tabs = a.tabs;
+    $('.form-wizard-steps').removeClass('form-wizard-tolal-steps-4').addClass('form-wizard-tolal-steps-' + tabs.length);
+    $.each(tabs, function(b, c) {
+        var tablabel = c.label;
+        var tabname = c.name;
+        var tab_id = c.id;
+        icon = c.icon || '';
+        $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + tablabel + '</p></div>');
+        $('.fields_set').apeend('<div id="' + tab_id + '"></div>')
 
+        $('#' + tab_id).append('<h3>' + tablabel + '</h3>');
+        var fields = c.fields;
+        $.each(fields, function(d, e) {
+            var field_id = e.id;
+            var field_name = e.name;
+            var field_label = e.label;
+            var defaultValue = e.defaultValue;
+            var field_type = e.type;
+            var field_placeholder = e.placeholder || '';
+            var pattern = e.pattern || '';
+            var readOnly = e.readOnly;
+            var visible = e.visible ? '' : 'hidden';
+            $('#' + tab_id).append(`<div class="form-group" id="${field_id}">
+                                </div>`);
+            switch (field_type) {
+                case 'text':
+                    $('#' + field_id).append('<label>' + field_label + ' </label><input type="text" name="' + field_name + '" placeholder="' + field_placeholder + '" class="form-control ' + visible + '" value="' + defaultValue + '" pattern="' + pattern + '" readonly="' + readOnly + '">');
+                    break;
+                case 'radio':
+                    $('#' + field_id).append('<label>' + field_label + ' </label>');
+                    $.each(e.dataList, function(f, g) {
+                        $('#' + field_id).append('<label class="radio-inline ' + visible + '" id="' + g.id + '"><input type="radio" name="' + g.name + '" value="' + g.value + '" checked="" readonly="' + readOnly + '"> ' + g.label + '</label>');
+                    });
+                    $('#' + field_id + ':first').attr("checked", "checked");
+                    break;
+                case 'dropdown':
+                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control ' + visible + '" readonly="' + readOnly + '"></select>');
+                    $.each(e.dataList, function(f, g) {
+                        $('select[name="' + field_name + ']').append(
+                            $('<option ></option>').name(g.name).val(g.value).html(g.label)
+                        );
+                    });
+                    $('#' + field_id + ':first').attr("selected", "selected");
+                    break;
+                default:
+
+                    break;
+            }
+
+        });
+    });
 
 
 };
