@@ -33,6 +33,12 @@
     text-align: center;
 }
 
+.load_extras {
+    position: relative;
+    top: 20px;
+    margin: 10px 20px;
+}
+
 .more_data {
     margin: auto;
     padding: 10px 15px 11px;

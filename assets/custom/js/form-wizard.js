@@ -42,15 +42,15 @@
             var progress_line = $(this).parents('.form-wizard').find('.form-wizard-progress-line');
 
             // fields validation
-            parent_fieldset.find('.required').each(function() {
+            parent_fieldset.find('.required:visible').each(function() {
                 if ($(this).val() == "") {
                     $(this).addClass('input-error');
                     $(this).closest('.form-group').addClass('has-error');
                     next_step = false;
-                } else {
-                    $(this).removeClass('input-error');
-                    $(this).closest('.form-group').removeClass('has-error');
                 }
+            });
+            parent_fieldset.find('.input-error').each(function() {
+                next_step = false;
             });
             // fields validation
 
@@ -91,7 +91,7 @@
         // submit
         $(document).on('submit', '.form-wizard', function(e) {
             // fields validation
-            $(this).find('.required').each(function() {
+            /*$(this).find('.required').each(function() {
                 if ($(this).val() == "") {
                     e.preventDefault();
                     $(this).addClass('input-error');
@@ -99,7 +99,11 @@
                     $(this).removeClass('input-error');
                 }
             });
+			*/
             // fields validation
+            e.preventDefault();
+            show_message('success', 'Loan Application Submitted Successfully');
+
 
         });
 

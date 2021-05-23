@@ -47,6 +47,16 @@ $(document).on('keyup', ':input', function(e) {
         $(this).closest('.form-group').find('.help-block').addClass('hidden');
 
     }
+    if ($(this).hasClass('required')) {
+        if ($(this).val() == "") {
+            $(this).addClass('input-error');
+            $(this).closest('.form-group').addClass('has-error');
+            next_step = false;
+        } else {
+            $(this).removeClass('input-error');
+            $(this).closest('.form-group').removeClass('has-error');
+        }
+    }
 });
 
 function show_message(m_type, message_text, message_data = [], reload = false) {
@@ -242,7 +252,8 @@ function createForm(a) {
         $('.form-wizard-steps').append('<div class="form-wizard-step"><div class="form-wizard-step-icon"><i class="fa fa-' + icon + '" aria-hidden="true"></i></div><p>' + c.label + '</p></div>');
         $('form').append('<fieldset id="fields_' + c.id + '"></fieldset>');
         var $original_tab_id = $('#fields_' + c.id);
-        $original_tab_id.append('<div id="' + c.id + '" name="' + c.name + '"></div>');
+        var visible = (c.visible === false) ? 'hidden' : '';
+        $original_tab_id.append('<div id="' + c.id + '" name="' + c.name + '" class="' + visible + '"></div>');
         if (c.fields !== null) {
             var tab_label = c.label;
             var fields = c.fields;
@@ -272,7 +283,7 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
             var defaultValue = checkNull(e.defaultValue) ? '' : 'value="' + e.defaultValue + '" ';
             var field_type = e.type;
             var placeholder = checkNull(e.placeholder) ? '' : 'placeholder="' + e.placeholder + '" ';
-            var required = e.required ? 'required="required"' : '';
+            var required = e.required ? 'required' : '';
 
             if (e.validators !== null) {
                 pattern = checkNull(e.validators.pattern) ? '' : 'pattern ="' + e.validators.pattern + '" ';
@@ -292,7 +303,7 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
                 case 'email':
                 case 'date':
                 case 'number':
-                    $('#' + field_id).append('<input type="' + field_type + '" name="' + field_name + '"  ' + placeholder + ' class="form-control" ' + defaultValue + readOnly + ' ' + pattern + required + ' >' + help_block);
+                    $('#' + field_id).append('<input type="' + field_type + '" name="' + field_name + '"  ' + placeholder + ' class="form-control ' + required + '" ' + defaultValue + readOnly + ' ' + pattern + ' >' + help_block);
                     break;
                 case 'radio':
                 case 'checkbox':
@@ -306,7 +317,7 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
                     if (e.placeholder) {
                         placeholder = '<option value="" disabled selected>' + e.placeholder + '</option>';
                     }
-                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control" ' + readOnly + required + '>' + placeholder + '</select>' + help_block);
+                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control ' + required + '" ' + readOnly + '>' + placeholder + '</select>' + help_block);
                     $.each(e.dataList, function(f, g) {
                         $('#' + field_id + ' select[name=' + field_name + ']').append(
                             '<option id="' + g.id + '" name="' + g.name + '" value="' + g.value + '" >' + g.label + '</option>');
@@ -331,8 +342,9 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
 
     if (a.sections !== null) {
         $.each(a.sections, function(x, y1) {
+            var visible = (y1.visible === false) ? 'hidden' : '';
             if (y1.fields) {
-                $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y1.id + '" data-visible="no">' + y1.label + '</a> <div id="' + y1.id + '" name="' + y1.name + '"  style="display:none;" ></div>');
+                $original_tab_id.append('<a href="#" class="load_extras" data-id="' + y1.id + '" data-visible="no">' + y1.label + '</a> <div id="' + y1.id + '" name="' + y1.name + '"  style="display:none;" class="' + visible + '" ></div>');
                 var tab_label1 = y1.label;
                 var fields1 = y1.fields;
                 var $newtab = $('#' + y1.id);
@@ -341,8 +353,10 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
             }
             if (y1.groups !== null) {
                 $.each(y1.groups, function(x2, y2) {
+
+                    var visible = (y2.visible === false) ? 'hidden' : '';
                     if (y2.fields) {
-                        $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y2.id + '" data-visible="no">' + y2.label + '</a> <div id="' + y2.id + '" name="' + y2.name + '"  style="display:none;" ></div>');
+                        $original_tab_id.append('<a href="#" class="load_extras" data-id="' + y2.id + '" data-visible="no">' + y2.label + '</a> <div id="' + y2.id + '" name="' + y2.name + '"  style="display:none;" class="' + visible + '" ></div>');
                         var tab_label2 = y2.label;
                         var fields2 = y2.fields;
                         var $newtab = $('#' + y2.id);
@@ -357,8 +371,9 @@ function makeinputFields($original_tab_id, $tab, tab_id, tab_label, fields, a) {
 
     if (a.groups !== null) {
         $.each(a.groups, function(x3, y3) {
+            var visible = (y3.visible === false) ? 'hidden' : '';
             if (y3.fields) {
-                $original_tab_id.append('<a href="#" class="btn btn-primary load_extras" data-id="' + y3.id + '" data-visible="no">' + y3.label + '</a> <div id="' + y3.id + '" name="' + y3.name + '" style="display:none;"></div>');
+                $original_tab_id.append('<a href="#" class="load_extras" data-id="' + y3.id + '" data-visible="no">' + y3.label + '</a> <div id="' + y3.id + '" name="' + y3.name + '" style="display:none;" class="' + visible + '"></div>');
                 var tab_label3 = y3.label;
                 var fields3 = y3.fields;
                 var $newtab = $('#' + y3.id);
