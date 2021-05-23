@@ -225,27 +225,26 @@ function createForm(a) {
             var pattern = isnull(e.pattern);
             var readOnly = e.readOnly;
             var visible = e.visible ? '' : 'hidden';
-            $('#' + tab_id).append(`<div class="form-group" id="${field_id}">
-                                </div>`);
+            $('#' + tab_id).append('<div class="form-group ' + visible + ' " id="' + field_id + '"></div>');
             switch (field_type) {
                 case 'text':
-                    $('#' + field_id).append('<label>' + field_label + ' </label><input type="text" name="' + field_name + '" placeholder="' + field_placeholder + '" class="form-control ' + visible + '" value="' + defaultValue + '" pattern="' + pattern + '" readonly="' + readOnly + '">');
+                    $('#' + field_id).append('<label>' + field_label + ' </label><input type="text" name="' + field_name + '" placeholder="' + field_placeholder + '" class="form-control" value="' + defaultValue + '" pattern="' + pattern + '" readonly="' + readOnly + '">');
                     break;
                 case 'radio':
                     $('#' + field_id).append('<label>' + field_label + ' </label>');
                     $.each(e.dataList, function(f, g) {
-                        $('#' + field_id).append('<label class="radio-inline ' + visible + '" id="' + g.id + '"><input type="radio" name="' + g.name + '" value="' + g.value + '" checked="" readonly="' + readOnly + '"> ' + g.label + '</label>');
+                        $('#' + field_id).append('<label class="radio-inline " id="' + g.id + '"><input type="radio" name="' + g.name + '" value="' + g.value + '" checked="" readonly="' + readOnly + '"> ' + g.label + '</label>');
                     });
-                    $('#' + field_id + ':first').attr("checked", "checked");
+                    $('#' + field_id + ' radio:first').attr("checked", "checked");
                     break;
                 case 'dropdown':
-                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control ' + visible + '" readonly="' + readOnly + '"></select>');
+                    $('#' + field_id).append('<select name="' + field_name + '" class="form-control" readonly="' + readOnly + '"></select>');
                     $.each(e.dataList, function(f, g) {
                         $('select[name="' + field_name + ']').append(
                             $('<option ></option>').attr('name', g.name).val(g.value).html(g.label)
                         );
                     });
-                    $('#' + field_id + ':first').attr("selected", "selected");
+                    $('#' + field_id + ' option:first').attr("selected", "selected");
                     break;
                 default:
 
