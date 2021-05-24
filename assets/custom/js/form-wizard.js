@@ -102,7 +102,7 @@
 			*/
             // fields validation
             e.preventDefault();
-            show_message('success', 'Loan Application Submitted Successfully');
+            show_message('success', 'Loan Application Submitted Successfully',[],true);
 
 
         });
