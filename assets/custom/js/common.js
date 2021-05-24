@@ -45,13 +45,11 @@ $(document).on('keyup', ':input', function(e) {
     } else {
         $(this).closest('.form-group').removeClass('has-error has-warning has-success');
         $(this).closest('.form-group').find('.help-block').addClass('hidden');
-
     }
     if ($(this).hasClass('required')) {
         if ($(this).val() == "") {
             $(this).addClass('input-error');
             $(this).closest('.form-group').addClass('has-error');
-            next_step = false;
         } else {
             $(this).removeClass('input-error');
             $(this).closest('.form-group').removeClass('has-error');

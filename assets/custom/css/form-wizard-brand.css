@@ -29,6 +29,9 @@
     color: red;
 }
 
+.help-block{
+    color:#c8623a;
+}
 .text-center {
     text-align: center;
 }
@@ -580,7 +583,7 @@
 }
 
 .form-wizard label {
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .form-wizard label span {
